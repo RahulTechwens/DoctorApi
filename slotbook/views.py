@@ -11,12 +11,12 @@ class SlotBookViewSet(APIView):
     def get(self, request):
         try:
             date_string = request.query_params.get('date')
-            user_id = request.query_params.get('user_id')  # Corrected typo here
+            user_id = request.query_params.get('user_id')
             if date_string:
                 search_date = datetime.strptime(date_string, '%Y-%m-%d').date()
                 slots = Slot.objects.filter(date=search_date, user_id=user_id)
             else:
-                slots = Slot.objects.filter(user=user_id)  # Corrected typo here
+                slots = Slot.objects.filter(user=user_id)
             slot_serializer = SlotSerializer(slots, many=True)
             return Response({'status': 200, 'success': True, 'data': slot_serializer.data})
         except Exception as e:
