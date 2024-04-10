@@ -26,6 +26,8 @@ class SlotBookViewSet(APIView):
     def post(self, request):
         try:
             data = request.data
+            # data['description'] = ""
+            data['is_complete'] = False
             slot_book_serialize = SlotSerializer(data=data)
             slot_book_serialize.is_valid(raise_exception=True)
             slot_book_serialize.save()
