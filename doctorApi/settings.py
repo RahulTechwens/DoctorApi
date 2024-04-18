@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'doctorApi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'doctor',
+        'NAME': 'doctor_v2',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',   # Change if MySQL is running on a different host

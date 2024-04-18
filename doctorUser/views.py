@@ -1,11 +1,14 @@
 from django.db import transaction
 from django.utils.text import slugify
+from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from .serializer import *
 from .models import *
+from slotEntry.serializer import SlotEntrySerializer
+from slotEntry.models import slotEntry
 
 
 
@@ -40,7 +43,7 @@ class UserViewSet(APIView):
             elif 'phone' in user_serializer.errors:
                 error_response['message'] = 'Phone number already exists'
             else:
-                error_response['message'] = 'An error occurred while creating the user'
+                error_response['message'] = 'Something Went wrong'
             return Response(error_response, status=status.HTTP_400_BAD_REQUEST)
     
 
@@ -55,4 +58,13 @@ class UserViewSet(APIView):
 
         user_serializer = CustomUserSerializer(users, many=True)
 
+
+
+        # today_date = datetime.now().date()
+        # slot_entries = slotEntry.objects.filter(date=today_date)
+        # slot_entry_serializer = SlotEntrySerializer(slot_entries, many=True)
+
+        # if len(slot_entry_serializer.data) == 0:
+        #     slotEntry.objects.all().update(date=today_date, seat_available=6)
+    
         return Response({"data": user_serializer.data}, status=status.HTTP_200_OK)

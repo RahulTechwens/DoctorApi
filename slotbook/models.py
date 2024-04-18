@@ -12,3 +12,13 @@ class Slot(models.Model):
 
     def __str__(self):
        return f"Slot {self.id} - {self.date} {self.time} ({'Complete' if self.is_complete else 'Incomplete'})"
+
+class SlotMoney(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField( null=True )
+    total_amount = models.TextField( null=True )
+    amount = models.TextField( null=True ) 
+
+    def __str__(self):
+       return self.id
