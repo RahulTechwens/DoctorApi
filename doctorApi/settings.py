@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'doctorUser',
     'slotbook',
-    'slotEntry'
+    'slotEntry',
+    'report'
 ]
 
 MIDDLEWARE = [
