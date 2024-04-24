@@ -6,10 +6,10 @@ from datetime import date
 
 from slotbook.models import SlotMoney
 from slotbook.serializer import SlotMoneySerializer
+from doctorUser.models import CustomUser
+from doctorUser.serializer import CustomUserSerializer
 
 class TransactionViewSet(APIView):
-
-
     def get(self, request):
         try:
             from_date_str = request.query_params.get('from_date')
@@ -44,3 +44,26 @@ class TransactionViewSet(APIView):
                 'error' : str(e)
             }
             return Response(error_response, status=status.HTTP_400_BAD_REQUEST)
+
+class PatientViewSet(APIView):
+    def get(self, request):
+        try:
+            users = CustomUser.objects.all()
+            user_serializer = CustomUserSerializer(users, many=True).data
+            
+            return Response({
+                'status': 200,
+                'success': True,
+                'data': user_serializer
+            })
+
+        except Exception as e:
+
+            error_response = {
+                'status': 400, 
+                'success': False, 
+                'message': 'An error occurred while fetching report',
+                'error' : str(e)
+            }
+            return Response(error_response, status=status.HTTP_400_BAD_REQUEST)
+

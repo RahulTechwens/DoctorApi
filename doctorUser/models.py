@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class CustomUserManager(BaseUserManager):
@@ -23,7 +24,7 @@ class CustomUser(AbstractBaseUser):
     type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
     
     is_active = models.BooleanField(default=True)
-
+    create_date = models.DateField(default=date.today) 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
