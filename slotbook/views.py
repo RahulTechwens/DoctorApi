@@ -29,6 +29,7 @@ class SlotBookViewSet(APIView):
                     search_date = datetime.strptime(date_string, '%Y-%m-%d').date()
                     slot_entries_filter = slotEntry.objects.all()
                     slot_entry_serializer = SlotEntrySerializer(slot_entries_filter, many=True).data
+                    is_user_booking = 0
                     for slot_entry_key in slot_entry_serializer:
                         count_book = Slot.objects.filter(store=slot_entry_key["id"], date=search_date)
                         kk = Slot.objects.filter(user=user_id, date=search_date, store=slot_entry_key["id"])
@@ -36,14 +37,16 @@ class SlotBookViewSet(APIView):
                         slot_serializer_data = SlotSerializer(kk, many=True).data
 
                         if len(slot_serializer_data) > 0:
-                            slot_entry_key['is_user_booking'] = 1 
-                        else: 
+                            is_user_booking = 1
+                            slot_entry_key['is_user_booking'] = 1
+                        else:
                             slot_entry_key['is_user_booking'] = 0
                             
                         slot_entry_key['seat_available'] = slot_entry_serializer[0]['limit'] - len(slot_serializer_count)
                     return Response({
                         'status': 200,
                         'success': True,
+                        'is_user_booked':is_user_booking,
                         'user_wise_slot_register': slot_entry_serializer
                     })
 
@@ -207,6 +210,7 @@ class SlotBookViewSet(APIView):
         
 
 class SlotMoneyViewSet(APIView):
+
     def post(self, request):
         try:
             data = request.data
@@ -214,7 +218,11 @@ class SlotMoneyViewSet(APIView):
 
             user = data.get('user')
             paid_amount = float(data.get('amount'))
+            
             total_paid_amount = SlotMoney.objects.filter(user=user).aggregate(total_amount=Sum('amount'))['total_amount']
+            if total_paid_amount is None:
+                total_paid_amount = 0  # Set it to 0 if no records found
+            
             summation = paid_amount + total_paid_amount
 
             total_amount_float = float(data['total_amount'])
@@ -234,11 +242,12 @@ class SlotMoneyViewSet(APIView):
                 'status': 200, 
                 'success': True, 
                 'message': 'Money Added Successful',
-                'data':summation
+                'data': summation
             })
         except Exception as e:
             error_response = {'message': 'An error occurred while addmin money', 'e': str(e)}
             return Response(error_response, status=status.HTTP_400_BAD_REQUEST)
+
     def get(self, request):
         try:
             user_id = request.query_params.get('user_id')
