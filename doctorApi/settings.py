@@ -79,12 +79,20 @@ WSGI_APPLICATION = 'doctorApi.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'doctor_v2',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': 'localhost',   # Change if MySQL is running on a different host
+    #     'PORT': '3306',        # Change if MySQL is running on a different port
+    # }
+     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'doctor_v2',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',   # Change if MySQL is running on a different host
+        'USER': 'RahulSabui',
+        'PASSWORD': 'doctor@2024',
+        'HOST': 'RahulSabui.mysql.pythonanywhere-services.com',   # Change if MySQL is running on a different host
         'PORT': '3306',        # Change if MySQL is running on a different port
     }
 }
