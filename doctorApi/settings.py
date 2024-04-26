@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-qr)$8=6zrs2oiwb9he0p3!0_4x3wugnr)7^moe2u25*hq@=nre
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['engaged-expert-stinkbug.ngrok-free.app', '127.0.0.1','0.0.0.0', 'https://doctor-api-rahul-sabuis-projects.vercel.app/']
+ALLOWED_HOSTS = ['engaged-expert-stinkbug.ngrok-free.app', '127.0.0.1','0.0.0.0', 'https://doctor-api-rahul-sabuis-projects.vercel.app/', 'https://doctor-api-fawn.vercel.app/']
 
 
 # Application definition
